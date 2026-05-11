@@ -1,0 +1,47 @@
+---
+title: debuga.ai LLM Stack - Visão Geral
+---
+graph TB
+    subgraph SaaS["debuga.ai (SaaS)"]
+        APP[Aplicação Web]
+        AGENT[Agente Autônomo]
+    end
+
+    subgraph Gateway["debuga-llm-gateway"]
+        ROUTER[Router]
+        HEALTH[Health Check]
+        METRICS_GW[Metrics Collector]
+    end
+
+    subgraph Engine["debuga-vllm-engine"]
+        VLLM[vLLM Server]
+        MODEL[Qwen-Coder Model]
+        CACHE[KV Cache / PagedAttention]
+    end
+
+    subgraph Monitoring["Observabilidade"]
+        PROM[Prometheus]
+        GRAF[Grafana]
+    end
+
+    subgraph Cloud["Cloud Provider"]
+        CLOUD_LLM[Cloud LLM API]
+    end
+
+    APP --> AGENT
+    AGENT -->|"/v1/chat/completions"| ROUTER
+    ROUTER -->|"PREFERRED=local"| VLLM
+    ROUTER -->|"PREFERRED=cloud"| CLOUD_LLM
+    ROUTER -->|"fallback"| CLOUD_LLM
+    VLLM --> MODEL
+    MODEL --> CACHE
+    HEALTH --> VLLM
+    METRICS_GW --> PROM
+    VLLM -->|"/metrics"| PROM
+    PROM --> GRAF
+
+    style SaaS fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
+    style Gateway fill:#0f3460,stroke:#16213e,color:#e0e0e0
+    style Engine fill:#533483,stroke:#16213e,color:#e0e0e0
+    style Monitoring fill:#1a1a2e,stroke:#16213e,color:#e0e0e0
+    style Cloud fill:#2d3436,stroke:#16213e,color:#e0e0e0

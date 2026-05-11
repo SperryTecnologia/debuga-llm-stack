@@ -1,0 +1,81 @@
+# debuga.ai LLM Stack - Docker Compose de Laboratório
+# Este é um exemplo genérico para experimentação local.
+# NÃO representa a configuração de produção do debuga.ai.
+#
+# Pré-requisitos:
+# - NVIDIA GPU com 24GB+ VRAM
+# - NVIDIA Container Toolkit instalado
+# - Docker 24.0+
+# - Arquivo .env configurado (copie de .env.example)
+#
+# Uso:
+#   docker compose up -d
+#   curl http://localhost:8000/health
+
+services:
+  # ─── Motor de Inferência (vLLM) ─────────────────────────
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: debuga-vllm
+    restart: unless-stopped
+    ports:
+      - "${VLLM_PORT:-8000}:8000"
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HF_TOKEN}
+    volumes:
+      - model-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      --model ${VLLM_MODEL_ID:-Qwen/Qwen2.5-Coder-7B-Instruct}
+      --tensor-parallel-size ${VLLM_TENSOR_PARALLEL_SIZE:-1}
+      --gpu-memory-utilization ${VLLM_GPU_MEMORY_UTILIZATION:-0.90}
+      --max-model-len ${VLLM_MAX_MODEL_LEN:-8192}
+      --host 0.0.0.0
+      --port 8000
+      --trust-remote-code
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # ─── Monitoramento (Opcional) ────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: debuga-prometheus
+    restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: debuga-grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3200}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    profiles:
+      - monitoring
+
+volumes:
+  model-cache:
+    name: debuga-model-cache
+  prometheus-data:
+    name: debuga-prometheus-data
+  grafana-data:
+    name: debuga-grafana-data

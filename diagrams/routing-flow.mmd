@@ -1,0 +1,34 @@
+---
+title: debuga.ai LLM Gateway - Fluxo de Roteamento
+---
+flowchart TD
+    REQ[Requisição de Inferência] --> AUTH{Autenticação OK?}
+    AUTH -->|Não| REJECT[401 Unauthorized]
+    AUTH -->|Sim| FLAG{ENABLE_LOCAL_INFERENCE?}
+
+    FLAG -->|false| CLOUD[Cloud Provider]
+    FLAG -->|true| PREF{PREFERRED_PROVIDER?}
+
+    PREF -->|cloud| CLOUD
+    PREF -->|local| LOCAL_CHECK{vLLM Health OK?}
+    PREF -->|auto| AUTO_ROUTE{Complexidade da Requisição}
+
+    AUTO_ROUTE -->|Simples: tokens < 2K| LOCAL_CHECK
+    AUTO_ROUTE -->|Complexa: tokens >= 2K| CLOUD
+
+    LOCAL_CHECK -->|Saudável| VLLM[vLLM Local]
+    LOCAL_CHECK -->|Indisponível| FALLBACK[Fallback → Cloud]
+
+    VLLM --> RESP_LOCAL{Resposta OK?}
+    RESP_LOCAL -->|Sim| RESPONSE[Retorna Resposta]
+    RESP_LOCAL -->|Erro/Timeout| FALLBACK
+
+    CLOUD --> RESPONSE
+    FALLBACK --> CLOUD
+
+    style REQ fill:#e0e0e0,stroke:#333,color:#000
+    style RESPONSE fill:#27ae60,stroke:#333,color:#fff
+    style REJECT fill:#e74c3c,stroke:#333,color:#fff
+    style VLLM fill:#533483,stroke:#333,color:#fff
+    style CLOUD fill:#2d3436,stroke:#333,color:#fff
+    style FALLBACK fill:#f39c12,stroke:#333,color:#fff

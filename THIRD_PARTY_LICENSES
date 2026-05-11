@@ -1,0 +1,67 @@
+# Third-Party Licenses
+
+This project references and is built upon the following open-source projects.
+The debuga.ai LLM Stack does not modify or redistribute these projects directly;
+it provides documentation and configuration examples for using them.
+
+---
+
+## vLLM
+
+- **Project:** https://github.com/vllm-project/vllm
+- **License:** Apache License 2.0
+- **Copyright:** vLLM Team
+- **Usage:** Motor de inferência LLM referenciado nas configurações e documentação
+
+---
+
+## Qwen2.5-Coder
+
+- **Project:** https://huggingface.co/Qwen
+- **License:** Apache License 2.0
+- **Copyright:** Alibaba Cloud / Qwen Team
+- **Usage:** Família de modelos referenciada nos benchmarks e configurações
+
+---
+
+## HuggingFace Transformers
+
+- **Project:** https://github.com/huggingface/transformers
+- **License:** Apache License 2.0
+- **Copyright:** Hugging Face, Inc.
+- **Usage:** Biblioteca de tokenização e utilitários referenciada na documentação
+
+---
+
+## PEFT (Parameter-Efficient Fine-Tuning)
+
+- **Project:** https://github.com/huggingface/peft
+- **License:** Apache License 2.0
+- **Copyright:** Hugging Face, Inc.
+- **Usage:** Framework de fine-tuning LoRA/QLoRA referenciado na documentação
+
+---
+
+## Prometheus
+
+- **Project:** https://github.com/prometheus/prometheus
+- **License:** Apache License 2.0
+- **Copyright:** The Prometheus Authors
+- **Usage:** Sistema de monitoramento referenciado nos exemplos de observabilidade
+
+---
+
+## Grafana
+
+- **Project:** https://github.com/grafana/grafana
+- **License:** AGPL-3.0 (core) / Apache 2.0 (plugins)
+- **Copyright:** Grafana Labs
+- **Usage:** Dashboard de visualização referenciado nos exemplos de observabilidade
+
+---
+
+## Nota
+
+A Sperry Tecnologia não é autora, mantenedora ou afiliada a nenhum dos projetos
+listados acima. O debuga.ai LLM Stack é construído **com base em** (based on)
+essas tecnologias open-source, respeitando suas respectivas licenças.
