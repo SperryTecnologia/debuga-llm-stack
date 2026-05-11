@@ -17,13 +17,13 @@ A stack é baseada em [vLLM](https://github.com/vllm-project/vllm) como motor de
 │       ▼                                             │
 │  ┌───────────────────────┐                          │
 │  │  debuga-llm-gateway   │  ← roteamento cloud/local│
-│  │   ├─ cloud provider   │  ← fallback padrão      │
-│  │   └─ vllm (local)     │  ← quando ativo         │
+│  │   ├─ cloud provider   │  ← fallback padrão       │
+│  │   └─ vllm (local)     │  ← quando ativo          │
 │  └───────────────────────┘                          │
 │       │                                             │
 │       ▼                                             │
 │  ┌───────────────────────┐                          │
-│  │  debuga-vllm-engine   │  ← Qwen-Coder models    │
+│  │  debuga-vllm-engine   │  ← Qwen-Coder models     │
 │  └───────────────────────┘                          │
 └─────────────────────────────────────────────────────┘
 ```
