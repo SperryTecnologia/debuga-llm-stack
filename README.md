@@ -34,10 +34,10 @@ A debuga.ai utiliza uma arquitetura de inferência em camadas. Este repositório
 │           debuga.ai (aplicação)             │
 ├─────────────────────────────────────────────┤
 │         Camada de Roteamento LLM            │
-│  ┌─────────────┐    ┌──────────────────┐   │
-│  │  GPU Local   │    │  Providers Cloud  │   │
-│  │  (Ollama)    │    │  (OpenAI, etc.)   │   │
-│  └─────────────┘    └──────────────────┘   │
+│  ┌─────────────┐    ┌──────────────────┐    │
+│  │  GPU Local  │    │  Providers Cloud │    │
+│  │  (Ollama)   │    │  (OpenAI, etc.)  │    │
+│  └─────────────┘    └──────────────────┘    │
 └─────────────────────────────────────────────┘
 ```
 
