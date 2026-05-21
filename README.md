@@ -8,7 +8,7 @@ Desenvolvida por [Sperry Tecnologia](https://www.sperrytecnologia.com.br).
 
 ## O que é
 
-Este repositório documenta a arquitetura de inferência LLM da plataforma [debuga.ai](https://github.com/SperryTecnologia/debuga-ai). Ele registra decisões técnicas, comparações de modelos, estratégias de roteamento e configurações de infraestrutura para inferência híbrida local/cloud.
+Este repositório documenta a arquitetura de inferência LLM da plataforma [debuga.ai](https://debuga.ai). Ele registra decisões técnicas, comparações de modelos, estratégias de roteamento e configurações de infraestrutura para inferência híbrida local/cloud.
 
 Este é um repositório de **documentação técnica e pesquisa**, não contém código de produção.
 
@@ -152,6 +152,15 @@ Este repositório é destinado a:
 ## Licença
 
 Documentação pública sob licença MIT. O código de produção da plataforma é privado.
+
+---
+
+## Documentação Completa
+
+- [Whitepaper](https://debuga.ai/docs/whitepaper)
+- [Arquitetura Técnica](https://debuga.ai/docs/architecture)
+- [White Label Enterprise](https://debuga.ai/docs/white-label-enterprise)
+- [Repositório principal](https://github.com/SperryTecnologia/debuga-ai)
 
 ---
 
